@@ -24,7 +24,7 @@ struct AddView: View {
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Name", text: $name)
+                TextField("Name", text: $name).autocorrectionDisabled(true)
                 
                 Picker("Expense type", selection: $type) {
                     ForEach(types, id: \.self) {
