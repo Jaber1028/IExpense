@@ -12,12 +12,27 @@ struct ContentView: View {
     
     @State private var showingAddExpense = false
     
+    var currencyFormat: FloatingPointFormatStyle<Double>.Currency {
+        return .currency(code: Locale.current.currency?.identifier ?? "USD")
+    }
+    
     var body: some View {
         NavigationStack {
             List {
                 // WE don't need id anymore since ExpenseItems is : Identifiable
                 ForEach(expenses.items) { item in
-                    Text(item.name)
+                    // Uses more Stacks to show Expense info
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                                .font(.headline)
+                            Text(item.type)
+                        }
+                        
+                        Spacer()
+                        
+                        Text(item.amount, format: currencyFormat)
+                    }
                 } .onDelete(perform: removeItems)
             }
             .navigationTitle("iExpense")
